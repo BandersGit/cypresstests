@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API:er</title>
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <!--
+        Generella tips
+        Att använda API:er bygger i hög grad på ett samarbete med den som tillhandahåller API:et.
+        För att använda ett API är det därför ofta viktigt att läsa dokumentationen för att veta hur man skall anropa ett visst api
+        och vad man kan förvänta sig få tillbaka för data, hur den är strukturerad etc.
+        Till varje uppgift länkas dokumentation för just det API:et - använd dem som stöd för uppgifterna.
+
+        Obs! Eftersom data hämtas från externa källor går det inte att på förhand säkerställa vad som kommer erhållas.
+        Det bör inte finnas något i API:erna som kan ge upphov till anstöt eller andra problem, men fullt ut kan det aldrig garanteras.
+    -->
+
+    <!--
+        Uppgift 1
+        När någon trycker på knappen "Get random qoute",
+        Hämta och visa ett slumpmässigt citat och dess upphovsman, som du får från https://api.quotable.io/quotes/random
+        Besök gärna sidan i din webbläsare först, så ser du hur JSON-objektet du får tillbaka är strukturerat.
+        Dokumentation: https://docs.quotable.io/docs/api
+    -->
+    <h3>Uppgift 1</h3>
+    <p>Quote provided by <a href="https://api.quotable.io" target="_blank">Quotable.io</a></p>
+    <button id="random-quote-btn" data-testid="random-quote-btn">Get random quote</button>
+    <p id="random-quote" data-testid="random-quote"></p>
+    <p id="random-qoute-author" data-testid="random-quote-author"></p>
+
+    <!--
+        Uppgift 2
+        Hämta en url till en Dog-image från https://dog.ceo/api/breeds/image/random och visa upp den i ett img-element
+        Dokumentation: https://dog.ceo/dog-api/
+        
+        (Att använda en img-tagg med en src som pekar på en extern address, dvs någon annans sida, kallas för hotlinking och det bör man ofta vara försiktig med,
+        eftersom det belastar servrarna hos den som äger sidan på ett sätt som inte alla server-ägare önskar. 
+        I det här fallet är det dock så API:et är tänkt att användas)
+    -->
+    <h3>Uppgift 2</h3>
+    <p>Dog image provided by <a href="https://dog.ceo" target="_blank">dog.ceo</a></p>
+    <button id="dog-btn" data-testid="dog-btn">Get dog image</button>
+    <br /><br />
+    <img id="dog-img" data-testid="dog-img" width="300" hidden src="" />
+
+    <!--
+        Uppgift 3
+        Hämta information om vad din publika ip-address är ifrån https://api.ipify.org/?format=json, och hämta sedan information om den ip-adressen genom att anropa
+        http://ip-api.com/json/ersätt-med-din-ip och fyll i informationen enligt önskad data nedan. 
+
+        Publik IP-information, som t.ex. ens platsinfo, är dock sällan helt exakt - och ibland kan helt andra ställen visas, beroende på t.ex. ens ISP och om man sitter bakom en VPN.
+
+        Obs: ip-api.com har en rate limit (hur ofta man får anropa dem) begränsad till 45 / minut. Anropar du oftare / snabbare än så kommer du få en felkod 429 tillbaka. 
+        Försök att lugna ned anropen lite i så fall så de inte blir sura och i värsta fall blockerar dig från sin tjänst :)
+    -->
+    <h3>Uppgift 3</h3>
+    <p>Information provided by <a href="https://www.ipify.org/" target="_blank">ipify.org/</a>, <a
+            href="http://ip-api.com" target="_blank">ip-api.com</a></p>
+    <button id="ip-btn" data-testid="ip-btn">Get IP info</button>
+    <p>Din IP: <span id="ip" data-testid="ip"></span></p>
+    <p>Ditt land: <span id="ip-country" data-testid="ip-country"></span></p>
+    <p>Din Stad: <span id="ip-city" data-testid="ip-city"></span></p>
+    <p>Din ISP: <span id="ip-isp" data-testid="ip-isp"></span></p>
+
+
+    <!--
+        BONUS-uppgifter!
+    -->
+
+    <!--
+        Uppgift 4
+        Bygg vidare på uppgift 3.
+        Använd den longitude- och latitude som du fick tillbaka i samband med IP-anropen i uppgift 3
+        till att placera ut positionen på kartan nedan, samt ange vilken temperatur det är på platsen
+        
+        För att få ut väderinformation kan du anropa
+        https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=ERSÄTT-HÄR-MED-DIN-LATITUDE&lon=ERSÄTT-HÄR-MED-DIN-LONGITUDE
+        För att justera position på kartwidgeten med din longitude- och latitude, se kodsnuttarna i JS-filen för hjälp.
+    -->
+
+    <!--
+        Kod till uppgift 4
+        <p>Map provided by <a href="https://www.openstreetmap.org" target="_blank">www.openstreetmap.org</a></p>
+        <p>Temperatur på din plats just nu: <span id="ip-weather" data-testid="ip-weather"></span></p>
+        <iframe id="map" data-testid="ip-map" width="425" height="350" hidden>
+        </iframe>
+    -->
+
+
+
+
+    <!--
+        Uppgift 5
+        När vi anropar API:er kan mycket gå snett
+        Dels kan det bli nätverksfel, dels kan servern vi pratar meddela oss att den av någon anledning inte kan eller vill ge oss deb data vi begärt
+        Ang. det senare så skickar servrar om de är välkonfigurerade med s.k. statuskoder med sina svar - 
+        En siffra som om den börjar på 2xx (200, 201, 203 etc.) indikerar att det gått bra, medan 4xx indikerar ett fel på klientsidan och 5xx ett fel på serversidan
+        (T.ex. 403 - "Forbidden", anroparen hade inte rätt att göra anropet, eller 500 - "Internal Server Error", något gick snett på deras sida trots att kanske inte var något fel på ditt anrop)
+
+        Undersök och se hur du kan implementera felhantering för sådana situationer i uppgift 1 - i det här fallet skall en alert med ett valfritt lämpligt felmeddelande du väljer poppa upp när sådant inträffar.
+        Obs. Det kan vara svårt att själv se hur vår kod t.ex. hanterar olika felkoder, eftersom vi inte har kontroll över servern vi anropar.
+        Då kan Cypress-testerna vara till nytta - de kan simulera olika responser och testa hur din kod hanterar dessa, utan att något faktiskt anrop sker till API:ernra.
+        (Det kallas att stubba alt. mocka en respons, och är vanligt när man testar kod som är beroende av externa tjänster, för att testa vår egen del av systemet oberoende av dessa tjänster) 
+    -->
+
+</body>
+
+</html>

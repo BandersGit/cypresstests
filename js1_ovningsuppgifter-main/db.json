@@ -1,0 +1,16 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "Först!!!!",
+      "content": "Hej allihopa, jag var först! Vem av er blir tvåa på att skriva i gästboken?",
+      "author": "Alice"
+    },
+    {
+      "id": 2,
+      "title": "Hej",
+      "content": "Attans, jag som trodde jag var så snabb",
+      "author": "Gunnar"
+    }
+  ]
+}

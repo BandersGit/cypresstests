@@ -1,0 +1,73 @@
+<!--
+
+    BONUS-uppgift!
+
+    När vi besöker en hemsida, sänds dess innehåll över till vår dator och dess HTML / CSS / JavaScript körs av vår webbläsare
+    Om vi vill lagra data mer permanenent (och inte bara i vår klients webbläsare), eller om flera olika klienter skall kunna interagera
+    så krävs det typiskt att de binds samman genom en gemensam server & databas. Det brukar kallas för backend.
+    Det här är inte en kurs i hur vi programmerar en backend, 
+    men vi kan interagera med den enligt samma principer som vi interagerar med ett api.
+
+    Till den här uppgiften hör en backend som lagrar gästboksmeddelanden.
+    För att starta backenden: 
+    Öppna en terminal (t.ex. den inbyggda i visual studio code), 
+    se till att du befinner dig i roten av det här projeket 
+    (du går "upp" en mapp med kommandot "cd ..", du går in i en mapp genom att skriva "cd namn-på-din-mapp")
+    kör kommandot npx json-server --watch db.json
+    Nu bör det starta upp en server på port 3000 (om den inte är upptagen, då kanske den säger att den startat på t.ex. 3001 istället)
+    Du kan då besöka servern genom att gå till http://localhost:3000 (alt. om den säger någon annan adress i terminalen)
+    Om du lägger till /posts (typiskt http://localhost:3000/posts) till addressen du besöker (tekniskt - webbläsaren gör ett GET-anrop) 
+    så får du tillbaks de inlägg som ligger som JSON-objekt i filen db.json
+
+    Du kan dock göra mer än att bara hämta data! 
+    Se bonusklippet om fler HTTP-verb (t.ex. POST, DELETE, PUT), och se om du kan bygga på den kod som redan finns för att 
+    sända in de nya gästboksinlägg som användarna vill sända in genom det det nya formuläret 
+    
+    Bonusuppgift 2. ("F5-gang!")
+
+    Det är meckigt att behöva uppdatera sidan manuellt för att se om det kommit några nya gästboksinlägg, inkl. från andra användare
+    (Du kan simulera flera olika användare genom att t.ex. öppna flera olika flikar)
+    Det finns en metod setInterval(func, delay) https://developer.mozilla.org/en-US/docs/Web/API/setInterval som kan användas
+    för att återupprepa en viss funktion med jämna mellanrum. Se om du kan använda det i kombination med fetch för att 
+    dynamiskt uppdatera sidan med ny data när servern får in nya gästboksinlägg.
+    (Tekniken kallas för HTTP Polling, och är en inte så effektiv teknik för att 
+    bända på HTTP-protokollets client-server-modells begränsningar. Mycket tech-ord att googla om man vill! :-)
+
+
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+    <title>Guestbook</title>
+</head>
+
+<body>
+    <h1>Gästbok 3000</h1>
+    <h2>Skicka in ditt meddelande</h2>
+    <form id="form" action="/">
+        <label for="author">Ditt namn:</label><br>
+        <input type="text" name="author">
+        <br><br>
+        <label for="title">Titel:</label><br>
+        <input type="text" name="title">
+        <br><br>
+        <label for="content">Meddelande:</label><br>
+        <textarea rows="6" cols="50" name="content"></textarea>
+        <br><br>
+        <input id="submit-btn" data-testid="submit-btn" type="button" value="Submit">
+    </form>
+    <h2>Gästboksinlägg</h2>
+    <hr>
+    <div id="posts" data-testid="posts" style="width: 500px;">
+
+    </div>
+</body>
+
+</html>

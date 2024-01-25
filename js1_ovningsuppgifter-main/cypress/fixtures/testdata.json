@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "coffee": "Test1",
+        "price": 2,
+        "available": true
+    },
+    {
+        "id": 2,
+        "coffee": "Test2",
+        "price": 4,
+        "available": true
+    }
+]
